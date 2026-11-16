@@ -100,12 +100,25 @@ UniProt-style FASTA ──┘
 ├── models/
 │   └── best_model.joblib                 Serialized estimator and feature names
 ├── notebooks/
-│   ├── 01_eda_and_preprocessing.ipynb    EDA and physicochemical feature space showcase
-│   ├── 02_modeling_and_evaluation.ipynb  baseline vs. candidate evaluation showcase
-│   └── 03_shap_and_depth_analysis.ipynb  SHAP, ablation, and error audit showcase
+│   ├── 01_eda_and_preprocessing.ipynb    Read-only EDA and physicochemical feature space showcase
+│   ├── 02_modeling_and_evaluation.ipynb  Read-only baseline vs. candidate evaluation showcase
+│   └── 03_shap_and_depth_analysis.ipynb  Read-only SHAP, ablation, and error audit showcase
 ├── results/
-│   ├── figures/                          Saved evaluation and analysis plots
-│   └── tables/                           Saved metrics and error-case tables
+│   ├── figures/
+│   │   ├── comparative_parity_plot.png   Baseline vs. candidate parity comparison
+│   │   ├── confusion_matrix.png          Binary classification confusion matrix (>=50%)
+│   │   ├── feature_ablation_rmse.png     Raw-target feature-family ablation RMSE plot
+│   │   ├── feature_importance.png        Permutation feature importance plot
+│   │   ├── gravy_vs_solubility.png       GRAVY hydropathy vs. solubility scatter plot
+│   │   ├── parity_plot.png               Candidate model predicted vs. actual parity plot
+│   │   ├── residuals_distribution.png    Holdout prediction residuals distribution
+│   │   ├── roc_auc_curve.png             Receiver Operating Characteristic (ROC) curve
+│   │   └── shap_summary_plot.png         Global SHAP feature attribution summary
+│   └── tables/
+│       ├── comparative_metrics.csv       Baseline vs. candidate holdout metrics
+│       ├── evaluation_metrics.csv        Candidate model evaluation summary
+│       ├── feature_ablation.csv          Feature-family ablation metrics and 95% CIs
+│       └── top_10_high_error_cases.csv   Highest-residual holdout protein audit
 ├── src/
 │   ├── preprocessing.py                  eSOL cleaning and FASTA gene mapping
 │   ├── features.py                       Sequence feature calculation
