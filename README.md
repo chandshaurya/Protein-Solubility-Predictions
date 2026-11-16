@@ -1,14 +1,15 @@
 <p align="center">
   <img src="assets/protein-solubility-logo.svg" alt="Protein Solubility Prediction logo" width="760">
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white">
+  <img alt="scikit-learn" src="https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
+  <img alt="Streamlit" src="https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white">
+  <img alt="Research" src="https://img.shields.io/badge/Use-research%20%26%20education-64748b">
 </p>
 
-<h1 align="center">Protein Solubility Prediction</h1>
-<p align="center"><strong>Sequence-based regression, model interpretation, and an interactive prediction app</strong></p>
 <p align="center">
-<img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white">
-<img alt="scikit-learn" src="https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
-<img alt="Streamlit" src="https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white">
-<img alt="Research" src="https://img.shields.io/badge/Use-research%20%26%20education-64748b">
+  <strong>🚀 Live Interactive App:</strong> <a href="https://protein-solubility-predictions.streamlit.app/">https://protein-solubility-predictions.streamlit.app/</a><br>
+  <sub><em>(Note: Hosted on Streamlit Community Cloud—if the app has been inactive, it goes to sleep and may take 1–2 minutes to wake up on first click.)</em></sub>
 </p>
 
 A research and educational project that estimates **in-vitro solubility of *Escherichia coli* K-12 proteins** from amino-acid sequences. It combines eSOL measurements, sequence-derived features, scikit-learn regression, evaluation and interpretation scripts, read-only analytical notebooks, a Python inference API, and a Streamlit interface.
@@ -370,12 +371,16 @@ Batch parsing uses the first word of each FASTA header as the record ID. Some re
 
 ## App features
 
-Run `streamlit run app/streamlit_app.py`. The app provides these views when supporting artifacts are available:
+- **Live Web App:** [https://protein-solubility-predictions.streamlit.app/](https://protein-solubility-predictions.streamlit.app/)
+  > **Note on startup time:** Because the app is hosted on Streamlit Community Cloud, it automatically goes into sleep mode after periods of inactivity. If it is asleep when you open the link, click **"Yes, get this app back up!"** (if prompted) and allow **1–2 minutes** for the container to initialize.
+- **Run Locally:** Execute `streamlit run app/streamlit_app.py` from the repository root.
 
-1. **Sequence Predictor:** estimate, threshold label, sequence length, and GRAVY.
-2. **Batch FASTA Predictor:** upload/paste FASTA and export predictions as CSV.
-3. **Dataset Explorer:** preview the processed table and summary statistics.
-4. **Evaluation & Depth Analysis:** saved metrics, diagnostic plots, feature attribution, and high-error examples.
+The app provides four interactive views when supporting artifacts are available:
+
+1. **Sequence Predictor:** Single-sequence solubility estimate, threshold label (`Soluble` / `Insoluble`), sequence length, and GRAVY score.
+2. **Batch FASTA Predictor:** Upload or paste multi-entry FASTA sequences and export predictions as CSV.
+3. **Dataset Explorer:** Preview the processed eSOL dataset and summary statistics.
+4. **Evaluation & Depth Analysis:** View saved validation metrics, diagnostic plots, global SHAP feature attributions, and high-error protein examples.
 
 ## Outputs and interpretation
 
@@ -438,9 +443,9 @@ Niwa, T., Ying, B.-W., Saito, K., Jin, W., Takada, S., Ueda, T., and Taguchi, H.
 - **Sequence reference:** The UniProt Consortium (2023). “UniProt: the Universal Protein Knowledgebase in 2023.” *Nucleic Acids Research*, 51(D1), D523–D531. https://doi.org/10.1093/nar/gkac1052
 - **Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
 
-**Open-source software and libraries**
+**Open-source software, libraries, and hosting**
 
-This project builds upon Python and the open-source scientific Python ecosystem:
+This project builds upon Python, the open-source scientific Python ecosystem, and free cloud hosting:
 - **Python:** Van Rossum, G., & Drake, F. L. (2009). *Python 3 Reference Manual*. Scotts Valley, CA: CreateSpace. https://www.python.org
 - **NumPy:** Harris, C. R., et al. (2020). “Array programming with NumPy.” *Nature*, 585(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
 - **pandas:** McKinney, W. (2010). “Data Structures for Statistical Computing in Python.” *Proceedings of the 9th Python in Science Conference*, 56–61. https://doi.org/10.25080/Majora-92bf1922-00a
@@ -449,5 +454,6 @@ This project builds upon Python and the open-source scientific Python ecosystem:
 - **Matplotlib:** Hunter, J. D. (2007). “Matplotlib: A 2D Graphics Environment.” *Computing in Science & Engineering*, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
 - **Seaborn:** Waskom, M. L. (2021). “seaborn: statistical data visualization.” *Journal of Open Source Software*, 6(60), 3021. https://doi.org/10.21105/joss.03021
 - **Streamlit:** Streamlit Inc. *Streamlit: A faster way to build and share data apps*. https://streamlit.io
+- **Streamlit Community Cloud:** Streamlit / Snowflake Inc. *Cloud hosting platform used to deploy and serve the live interactive web application*. https://share.streamlit.io
 - **Jupyter:** Kluyver, T., et al. (2016). “Jupyter Notebooks – a publishing format for reproducible computational workflows.” *Positioning and Power in Academic Publishing: Players, Agents and Agendas*, 87–90. https://doi.org/10.3233/978-1-61499-649-1-87
 - **Joblib:** Joblib Development Team. *Joblib: running Python functions as pipeline jobs*. https://joblib.readthedocs.io
