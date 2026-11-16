@@ -11,7 +11,7 @@
 <img alt="Research" src="https://img.shields.io/badge/Use-research%20%26%20education-64748b">
 </p>
 
-A research and educational project that estimates **in-vitro solubility of *Escherichia coli* K-12 proteins** from amino-acid sequences. It combines eSOL measurements, sequence-derived features, scikit-learn regression, evaluation and interpretation scripts, a Python inference API, and a Streamlit interface.
+A research and educational project that estimates **in-vitro solubility of *Escherichia coli* K-12 proteins** from amino-acid sequences. It combines eSOL measurements, sequence-derived features, scikit-learn regression, evaluation and interpretation scripts, read-only analytical notebooks, a Python inference API, and a Streamlit interface.
 
 > **Research use only:** predictions are computational estimates, not laboratory measurements. eSOL measurements were obtained in a particular chaperone-free cell-free PURE system; results should not be assumed to predict solubility in every organism or experimental setup.
 
@@ -24,14 +24,15 @@ A research and educational project that estimates **in-vitro solubility of *Esch
 - [Models and evaluation](#models-and-evaluation)
 - [Installation and quick start](#installation-and-quick-start)
 - [Reproducing the experiments](#reproducing-the-experiments)
+- [Reproduction checklist](#reproduction-checklist)
 - [Prediction examples](#prediction-examples)
 - [App features](#app-features)
 - [Outputs and interpretation](#outputs-and-interpretation)
 - [Troubleshooting](#troubleshooting)
 - [Scientific caveats](#scientific-caveats)
-- [Reproducibility checklist](#reproducibility-checklist)
+- [Roadmap for a stronger research release](#roadmap-for-a-stronger-research-release)
+- [AI-use disclosure](#ai-use-disclosure)
 - [Citation and attribution](#citation-and-attribution)
-  
 
 ## Project overview
 
@@ -40,48 +41,51 @@ A research and educational project that estimates **in-vitro solubility of *Esch
 | Component | Current implementation |
 |---|---|
 | Source measurements | eSOL, provided by Japan's Life Science Database Archive (LSDB Archive) |
-| Raw table | 3400+ records |
+| Raw table | 3,400+ records |
 | Target expected by training scripts | `Solubility (%)` |
-| Baseline | Ridge regression  |
-| Candidate | `HistGradientBoostingRegressor` |
+| Baseline | Ridge regression |
+| Candidate | HistGradientBoostingRegressor |
 | Feature groups | Length, AAC, dipeptides, physicochemical summaries, autocorrelations, CTD-style descriptors, reported properties |
 | Interpretation | Permutation importance, SHAP approximation, ablation, residual and error analysis |
-| Interfaces | Python prediction API and Streamlit app |
+| Interfaces | Python prediction API, Streamlit app, and Jupyter showcase notebooks |
 
-The 2,642 records refer to the **included processed table**, not the total size of the original eSOL archive.
+The 2,642 records refer to the included processed table, not the total size of the original eSOL archive.
 
 ## Pipeline
 
 ```text
-eSOL measurements ─────┐
-                       ├─ cleaning + gene-to-sequence mapping
-UniProt-style FASTA ───┘
-                              |
-                              v
-                      normalized sequences
-                              |
-                              v
-                      numerical features
-                              |
-                 +------------+-------------+
-                 v            v             v
-              training    evaluation   depth analysis
-                 |            |             |
-                 v            v             v
-             model file   metrics/plots  SHAP/ablation
-                 |
-                 v
-        Python API + Streamlit app
+eSOL measurements ────┐
+                      ├─► cleaning + gene-to-sequence mapping
+UniProt-style FASTA ──┘
+                      │
+                      ▼
+             normalized sequences
+                      │
+                      ▼
+              numerical features ──────────┐
+                      │                    │
+                      ▼                    │
+                  training                 │
+                      │                    │
+                      ▼                    │
+                 model file                │
+                      │                    │
+         ┌────────────┼────────────┐       │
+         ▼            ▼            ▼       │
+   Python API +   evaluation  depth analysis
+  Streamlit app       │            │  ◄────┘
+                      ▼            ▼
+                metrics/plots SHAP/ablation
 ```
 
 ## Repository structure
 
 ```text
-
 .
 ├── app/
 │   └── streamlit_app.py                  Interactive prediction and analytics UI
-├── assets/protein-solubility-logo.svg
+├── assets/
+│   └── protein-solubility-logo.svg       Project banner graphic
 ├── data/
 │   ├── raw/
 │   │   ├── esol.csv                      Source eSOL table
@@ -110,30 +114,30 @@ UniProt-style FASTA ───┘
 ├── tests/
 │   └── test_experiment_design.py         Checks declared feature groups
 └── requirements.txt                      Python package dependencies
-
 ```
 
 Some directories and output files may only appear after running scripts. Execute commands from the repository root because several scripts use paths relative to the current working directory.
 
 ## Dataset and provenance
 
-The project uses the [official eSOL solubility dataset](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html) from the [LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/download.html). eSOL describes solubility measurements from a chaperone-free, reconstituted cell-free translation system (PURE system). These measurements are assay-specific.
+The project uses the [official eSOL solubility dataset](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html) from the [LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/download.html)  eSOL describes solubility measurements from a chaperone-free, reconstituted cell-free translation system (PURE system). These measurements are assay-specific.
 
 | File | Role |
 |---|---|
 | `data/raw/esol.csv` | Raw eSOL measurements and annotations |
 | `data/raw/idmapping.fasta` | UniProt-style FASTA used for gene mapping |
 | `data/processed/desol_cleaned.csv` | Cleaned eSOL rows before sequence merge |
+| `data/processed/esol_cleaned.csv` | Cleaned rows with mapped sequences |
 | `data/processed/esol_with_sequences.csv` | Normalized sequence table; target named `solubility` |
 | `data/processed/esol_advanced_features.csv` | Model-ready table; target expected as `Solubility (%)` |
 
 Preprocessing drops rows without a target, keeps the first row for duplicate gene names, and retains sequences composed only of the 20 standard amino-acid letters. The FASTA parser expects a `GN=` gene tag and keeps the first record when duplicate gene names occur.
 
 ### Obtaining the data
-1. Open the [official eSOL download page](https://dbarchive.biosciencedbc.jp/en/esol/download.html).
+1. Open the [official eSOL download page](https://dbarchive.biosciencedbc.jp/en/esol/download.html)
 2. Read the [official license](https://dbarchive.biosciencedbc.jp/en/esol/lic.html).
-3. Download the eSOL table and obtain the sequence FASTA used for this project.
-4. Place them at `data/raw/esol.csv` and `data/raw/idmapping.fasta`, or update the paths in the preprocessing script.
+3. Download the eSOL table and obtain the corresponding *E. coli* K-12 UniProt sequence FASTA used for this project.
+4. Place them at `data/raw/esol.csv` and `data/raw/idmapping.fasta`, or update the paths in `src/preprocessing.py`. *(Note: processed CSV tables are already included in `data/processed/` so evaluation, notebooks, and the Streamlit app can run out of the box.)*
 
 **Attribution:** the eSOL archive has its own attribution and share-alike requirements. Follow the current official license terms when redistributing data or derived materials, and credit Hideki Taguchi as specified by the archive.
 
@@ -255,7 +259,7 @@ data/raw/esol.csv
 data/raw/idmapping.fasta
 ```
 
-The repository may already include processed data, a trained model, and saved result files. If you only want to launch the existing app, skip to **Step 8 — Launch Streamlit**. To rebuild the experiment from raw data, continue below.
+The repository already includes processed data, a trained model, and saved result files. If you only want to launch the existing app or inspect the notebooks, skip to **Step 8 — Launch Streamlit**. To rebuild the experiment from raw data, continue below.
 
 ### Step 4 — Clean data and map sequences
 
@@ -311,7 +315,7 @@ python src/depth_analysis.py
 
 This generates high-error cases, feature-family ablation, bootstrap RMSE intervals, permutation importance, a SHAP summary, and a GRAVY-versus-solubility plot when the required inputs and dependencies are available. The ablation uses measured targets on a fixed holdout rather than the smoothed targets used by the main workflow; its metrics represent a separate protocol and should not be compared as if they were the same experiment.
 
-### Step 8 — Launch the Streamlit application
+### Step 8 — Launch the Streamlit application (or inspect notebooks)
 
 From the repository root:
 ```bash
@@ -320,13 +324,10 @@ streamlit run app/streamlit_app.py
 
 Streamlit prints a local URL in the terminal (usually `http://localhost:8501`). Open that URL in your browser.
 
-The app provides these views when their supporting files are available:
-1. **Sequence Predictor** — enter a protein sequence and view the estimated solubility and derived threshold label.
-2. **Batch FASTA Predictor** — submit FASTA records and export predictions as CSV.
-3. **Dataset Explorer** — inspect the processed dataset and summary statistics.
-4. **Evaluation & Depth Analysis** — explore saved metrics, plots, feature attributions, and high-error examples.
-
-The app uses the saved model, processed data, and result files; launching it does not automatically retrain the model. If you only want to use the existing application and its saved checkpoint, Steps 1–2 and Step 8 are normally sufficient, provided the required model/data files are present.
+To inspect the read-only walkthrough notebooks (which load existing processed files without overwriting disk artifacts):
+```bash
+jupyter notebook notebooks/
+```
 
 ### Reproduction checklist
 
@@ -416,6 +417,15 @@ Existing snapshots report R² of 0.645 for Ridge and 0.763 for the candidate in 
 - [ ] Validate sequences strictly and report skipped FASTA entries.
 - [ ] Regenerate all headline metrics and figures from one documented run.
 
+## AI-use disclosure
+
+AI tools (such as Google Gemini and GitHub Copilot) were used as learning and productivity aids during this project in the following ways:
+- **Conceptual Understanding:** Exploring the biological meaning of protein physicochemical feature properties and understanding model interpretability concepts such as SHAP values.
+- **Coding Assistance:** Assisting with structuring, debugging, and refining parts of the Python scripts, Jupyter notebooks, and Streamlit interface.
+- **Documentation & Writing:** Helping draft and organize the project `README.md` and refine the phrasing and structure of the accompanying course project paper.
+
+All experiments, data preprocessing, model training runs, evaluation metrics, and final written claims were independently executed and verified by the author.
+
 ## Citation and attribution
 
 **Primary paper**
@@ -423,22 +433,21 @@ Existing snapshots report R² of 0.645 for Ridge and 0.763 for the candidate in 
 Niwa, T., Ying, B.-W., Saito, K., Jin, W., Takada, S., Ueda, T., and Taguchi, H. (2009). “Bimodal protein solubility distribution revealed by an aggregation analysis of the entire ensemble of *Escherichia coli* proteins.” *Proceedings of the National Academy of Sciences*, 106(11), 4201–4206. https://doi.org/10.1073/pnas.0811922106
 
 **Dataset sources and license**
-* **Official dataset:** [eSOL at LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html)
-* **Sequence reference:** The UniProt Consortium (2023). “UniProt: the Universal Protein Knowledgebase in 2023.” *Nucleic Acids Research*, 51(D1), D523–D531. https://doi.org/10.1093/nar/gkac1052
-* **Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
+- **Official dataset:** [eSOL at LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html)
+- **Kaggle benchmark mirror:** Kot, M. (2023). *eSOL Dataset: Escherichia coli Protein Solubility Dataset (~3,100 Proteins)*. [Kaggle Datasets](https://www.kaggle.com/datasets/martinkot/esol-dataset)
+- **Sequence reference:** The UniProt Consortium (2023). “UniProt: the Universal Protein Knowledgebase in 2023.” *Nucleic Acids Research*, 51(D1), D523–D531. https://doi.org/10.1093/nar/gkac1052
+- **Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
 
 **Open-source software and libraries**
 
 This project builds upon Python and the open-source scientific Python ecosystem:
-* **Python:** Van Rossum, G., & Drake, F. L. (2009). *Python 3 Reference Manual*. Scotts Valley, CA: CreateSpace. https://www.python.org
-* **NumPy:** Harris, C. R., et al. (2020). “Array programming with NumPy.” *Nature*, 585(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
-* **pandas:** McKinney, W. (2010). “Data Structures for Statistical Computing in Python.” *Proceedings of the 9th Python in Science Conference*, 56–61. https://doi.org/10.25080/Majora-92bf1922-00a
-* **scikit-learn:** Pedregosa, F., et al. (2011). “Scikit-learn: Machine Learning in Python.” *Journal of Machine Learning Research*, 12, 2825–2830. https://jmlr.org/papers/v12/pedregosa11a.html
-* **SHAP:** Lundberg, S. M., & Lee, S.-I. (2017). “A Unified Approach to Interpreting Model Predictions.” *Advances in Neural Information Processing Systems (NeurIPS)*, 30, 4765–4774.
-* **Matplotlib:** Hunter, J. D. (2007). “Matplotlib: A 2D Graphics Environment.” *Computing in Science & Engineering*, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
-* **Seaborn:** Waskom, M. L. (2021). “seaborn: statistical data visualization.” *Journal of Open Source Software*, 6(60), 3021. https://doi.org/10.21105/joss.03021
-* **Streamlit:** Streamlit Inc. *Streamlit: A faster way to build and share data apps*. https://streamlit.io
-* **Jupyter:** Kluyver, T., et al. (2016). “Jupyter Notebooks – a publishing format for reproducible computational workflows.” *Positioning and Power in Academic Publishing: Players, Agents and Agendas*, 87–90. https://doi.org/10.3233/978-1-61499-649-1-87
-* **Joblib:** Joblib Development Team. *Joblib: running Python functions as pipeline jobs*. https://joblib.readthedocs.io
-
-You are free to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the terms and conditions of the MIT License.
+- **Python:** Van Rossum, G., & Drake, F. L. (2009). *Python 3 Reference Manual*. Scotts Valley, CA: CreateSpace. https://www.python.org
+- **NumPy:** Harris, C. R., et al. (2020). “Array programming with NumPy.” *Nature*, 585(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
+- **pandas:** McKinney, W. (2010). “Data Structures for Statistical Computing in Python.” *Proceedings of the 9th Python in Science Conference*, 56–61. https://doi.org/10.25080/Majora-92bf1922-00a
+- **scikit-learn:** Pedregosa, F., et al. (2011). “Scikit-learn: Machine Learning in Python.” *Journal of Machine Learning Research*, 12, 2825–2830. https://jmlr.org/papers/v12/pedregosa11a.html
+- **SHAP:** Lundberg, S. M., & Lee, S.-I. (2017). “A Unified Approach to Interpreting Model Predictions.” *Advances in Neural Information Processing Systems (NeurIPS)*, 30, 4765–4774.
+- **Matplotlib:** Hunter, J. D. (2007). “Matplotlib: A 2D Graphics Environment.” *Computing in Science & Engineering*, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
+- **Seaborn:** Waskom, M. L. (2021). “seaborn: statistical data visualization.” *Journal of Open Source Software*, 6(60), 3021. https://doi.org/10.21105/joss.03021
+- **Streamlit:** Streamlit Inc. *Streamlit: A faster way to build and share data apps*. https://streamlit.io
+- **Jupyter:** Kluyver, T., et al. (2016). “Jupyter Notebooks – a publishing format for reproducible computational workflows.” *Positioning and Power in Academic Publishing: Players, Agents and Agendas*, 87–90. https://doi.org/10.3233/978-1-61499-649-1-87
+- **Joblib:** Joblib Development Team. *Joblib: running Python functions as pipeline jobs*. https://joblib.readthedocs.io
