@@ -1,8 +1,4 @@
-"""
-features.py
-Extracts 600+ physicochemical and sequence features from protein chains.
-Prevents feature dominance by log-scaling sequence length.
-"""
+
 import os
 import math
 import numpy as np
