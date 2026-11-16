@@ -40,9 +40,9 @@ A research and educational project that estimates **in-vitro solubility of *Esch
 | Component | Current implementation |
 |---|---|
 | Source measurements | eSOL, provided by Japan's Life Science Database Archive (LSDB Archive) |
-| Included processed table | 2,642 records |
+| Raw table | 3400+ records |
 | Target expected by training scripts | `Solubility (%)` |
-| Baseline | Ridge regression (`alpha=1.0`) |
+| Baseline | Ridge regression  |
 | Candidate | `HistGradientBoostingRegressor` |
 | Feature groups | Length, AAC, dipeptides, physicochemical summaries, autocorrelations, CTD-style descriptors, reported properties |
 | Interpretation | Permutation importance, SHAP approximation, ablation, residual and error analysis |
