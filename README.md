@@ -439,7 +439,6 @@ Niwa, T., Ying, B.-W., Saito, K., Jin, W., Takada, S., Ueda, T., and Taguchi, H.
 
 **Dataset sources and license**
 - **Official dataset:** [eSOL at LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html)
-- **Kaggle benchmark mirror:** Kot, M. (2023). *eSOL Dataset: Escherichia coli Protein Solubility Dataset (~3,100 Proteins)*. [Kaggle Datasets](https://www.kaggle.com/datasets/martinkot/esol-dataset)
 - **Sequence reference:** The UniProt Consortium (2023). “UniProt: the Universal Protein Knowledgebase in 2023.” *Nucleic Acids Research*, 51(D1), D523–D531. https://doi.org/10.1093/nar/gkac1052
 - **Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
 
