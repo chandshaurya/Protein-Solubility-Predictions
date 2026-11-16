@@ -89,6 +89,7 @@ UniProt-style FASTA ──┘
 │   └── protein-solubility-logo.svg       Project banner graphic
 ├── data/
 │   ├── raw/
+│   │   ├── README.md                     Detailed documentation of the raw eSOL dataset and schema
 │   │   ├── esol.csv                      Source eSOL table
 │   │   └── idmapping.fasta               Sequence records used for gene mapping
 │   └── processed/
@@ -99,9 +100,9 @@ UniProt-style FASTA ──┘
 ├── models/
 │   └── best_model.joblib                 Serialized estimator and feature names
 ├── notebooks/
-│   ├── 01_eda_and_preprocessing.ipynb    Read-only EDA and physicochemical feature space showcase
-│   ├── 02_modeling_and_evaluation.ipynb  Read-only baseline vs. candidate evaluation showcase
-│   └── 03_shap_and_depth_analysis.ipynb  Read-only SHAP, ablation, and error audit showcase
+│   ├── 01_eda_and_preprocessing.ipynb    EDA and physicochemical feature space showcase
+│   ├── 02_modeling_and_evaluation.ipynb  baseline vs. candidate evaluation showcase
+│   └── 03_shap_and_depth_analysis.ipynb  SHAP, ablation, and error audit showcase
 ├── results/
 │   ├── figures/                          Saved evaluation and analysis plots
 │   └── tables/                           Saved metrics and error-case tables
