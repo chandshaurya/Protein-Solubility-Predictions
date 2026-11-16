@@ -422,11 +422,23 @@ Existing snapshots report R² of 0.645 for Ridge and 0.763 for the candidate in 
 
 Niwa, T., Ying, B.-W., Saito, K., Jin, W., Takada, S., Ueda, T., and Taguchi, H. (2009). “Bimodal protein solubility distribution revealed by an aggregation analysis of the entire ensemble of *Escherichia coli* proteins.” *Proceedings of the National Academy of Sciences*, 106(11), 4201–4206. https://doi.org/10.1073/pnas.0811922106
 
-**Official dataset:** [eSOL at LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html)  
-**Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
+**Dataset sources and license**
+* **Official dataset:** [eSOL at LSDB Archive](https://dbarchive.biosciencedbc.jp/en/esol/data-1.html)
+* **Sequence reference:** The UniProt Consortium (2023). “UniProt: the Universal Protein Knowledgebase in 2023.” *Nucleic Acids Research*, 51(D1), D523–D531. https://doi.org/10.1093/nar/gkac1052
+* **Data license:** [Official eSOL license page](https://dbarchive.biosciencedbc.jp/en/esol/lic.html)
 
-When redistributing the dataset or derivative data, follow the archive's current attribution and share-alike requirements. Cite the data source separately from this software project.
+**Open-source software and libraries**
 
-
+This project builds upon Python and the open-source scientific Python ecosystem:
+* **Python:** Van Rossum, G., & Drake, F. L. (2009). *Python 3 Reference Manual*. Scotts Valley, CA: CreateSpace. https://www.python.org
+* **NumPy:** Harris, C. R., et al. (2020). “Array programming with NumPy.” *Nature*, 585(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
+* **pandas:** McKinney, W. (2010). “Data Structures for Statistical Computing in Python.” *Proceedings of the 9th Python in Science Conference*, 56–61. https://doi.org/10.25080/Majora-92bf1922-00a
+* **scikit-learn:** Pedregosa, F., et al. (2011). “Scikit-learn: Machine Learning in Python.” *Journal of Machine Learning Research*, 12, 2825–2830. https://jmlr.org/papers/v12/pedregosa11a.html
+* **SHAP:** Lundberg, S. M., & Lee, S.-I. (2017). “A Unified Approach to Interpreting Model Predictions.” *Advances in Neural Information Processing Systems (NeurIPS)*, 30, 4765–4774.
+* **Matplotlib:** Hunter, J. D. (2007). “Matplotlib: A 2D Graphics Environment.” *Computing in Science & Engineering*, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
+* **Seaborn:** Waskom, M. L. (2021). “seaborn: statistical data visualization.” *Journal of Open Source Software*, 6(60), 3021. https://doi.org/10.21105/joss.03021
+* **Streamlit:** Streamlit Inc. *Streamlit: A faster way to build and share data apps*. https://streamlit.io
+* **Jupyter:** Kluyver, T., et al. (2016). “Jupyter Notebooks – a publishing format for reproducible computational workflows.” *Positioning and Power in Academic Publishing: Players, Agents and Agendas*, 87–90. https://doi.org/10.3233/978-1-61499-649-1-87
+* **Joblib:** Joblib Development Team. *Joblib: running Python functions as pipeline jobs*. https://joblib.readthedocs.io
 
 You are free to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the terms and conditions of the MIT License.
