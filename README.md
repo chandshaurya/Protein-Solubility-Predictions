@@ -65,18 +65,22 @@ UniProt FASTA ──────┘                                      │
 ```text
 .
 ├── app/
-│   └── streamlit_app.py                 Interactive prediction and analytics UI
+│   └── streamlit_app.py                  Interactive prediction and analytics UI
 ├── data/
 │   ├── raw/
-│   │   ├── esol.csv                     Source eSOL table
-│   │   └── idmapping.fasta              Sequence records used for gene mapping
+│   │   ├── esol.csv                      Source eSOL table
+│   │   └── idmapping.fasta               Sequence records used for gene mapping
 │   └── processed/
-│       ├── desol_cleaned.csv            Cleaned eSOL rows before sequence merge
+│       ├── desol_cleaned.csv             Cleaned eSOL rows before sequence merge
 │       ├── esol_cleaned.csv              Cleaned rows with mapped sequences
 │       ├── esol_with_sequences.csv       Included normalized sequence table
 │       └── esol_advanced_features.csv    Included model-ready feature table
 ├── models/
-│   └── best_model.joblib                Serialized estimator and feature names
+│   └── best_model.joblib                 Serialized estimator and feature names
+├── notebooks/
+│   ├── 01_eda_and_preprocessing.ipynb    EDA and physicochemical feature space 
+│   ├── 02_modeling_and_evaluation.ipynb  baseline vs. candidate evaluation 
+│   └── 03_shap_and_depth_analysis.ipynb  SHAP, ablation, and error audit 
 ├── results/
 │   ├── figures/                          Saved evaluation and analysis plots
 │   └── tables/                           Saved metrics and error-case tables
@@ -88,7 +92,7 @@ UniProt FASTA ──────┘                                      │
 │   ├── depth_analysis.py                 Error, ablation, permutation, and SHAP analysis
 │   └── predict.py                        Python inference API
 ├── tests/
-│   └── test_experiment_design.py          Checks declared feature groups
+│   └── test_experiment_design.py         Checks declared feature groups
 └── requirements.txt                      Python package dependencies
 ```
 
