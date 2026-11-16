@@ -100,9 +100,9 @@ UniProt-style FASTA ──┘
 ├── models/
 │   └── best_model.joblib                 Serialized estimator and feature names
 ├── notebooks/
-│   ├── 01_eda_and_preprocessing.ipynb    Read-only EDA and physicochemical feature space showcase
-│   ├── 02_modeling_and_evaluation.ipynb  Read-only baseline vs. candidate evaluation showcase
-│   └── 03_shap_and_depth_analysis.ipynb  Read-only SHAP, ablation, and error audit showcase
+│   ├── 01_eda_and_preprocessing.ipynb    EDA and physicochemical feature space showcase
+│   ├── 02_modeling_and_evaluation.ipynb  baseline vs. candidate evaluation showcase
+│   └── 03_shap_and_depth_analysis.ipynb  SHAP, ablation, and error audit showcase
 ├── results/
 │   ├── figures/
 │   │   ├── comparative_parity_plot.png   Baseline vs. candidate parity comparison
