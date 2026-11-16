@@ -425,12 +425,12 @@ Existing snapshots report R² of 0.645 for Ridge and 0.763 for the candidate in 
 
 ## AI-use disclosure
 
-AI tools (such as Google Gemini and GitHub Copilot) were used as learning and productivity aids during this project in the following ways:
+AI tools were used as learning and productivity aids during this project in the following ways:
 - **Conceptual Understanding:** Exploring the biological meaning of protein physicochemical feature properties and understanding model interpretability concepts such as SHAP values.
 - **Coding Assistance:** Assisting with structuring, debugging, and refining parts of the Python scripts, Jupyter notebooks, and Streamlit interface.
 - **Documentation & Writing:** Helping draft and organize the project `README.md` and refine the phrasing and structure of the accompanying course project paper.
 
-All experiments, data preprocessing, model training runs, evaluation metrics, and final written claims were independently executed and verified by the author.
+All experiments, data preprocessing, model training runs, evaluation metrics, and final written claims were independently executed and verified by the me.
 
 ## Citation and attribution
 
